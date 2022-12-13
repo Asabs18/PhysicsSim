@@ -1,25 +1,30 @@
 import pygame, math
-from Components.assets import *
+from Assets.constants import *
 
 pygame.init()
 
 class Projectile:
-    def __init__(self, screen, cannon):
-        self.screen = screen
+    def __init__(self, environment, cannon):
+        self.environment = environment
+        self.screen = self.environment.getScreen()
 
         self.width = BALL_W
         self.height = BALL_H
 
         self.cannon = cannon
 
-        self.x = self.cannon.getRect()[0] + self.cannon.getWidth()
-        self.y = self.cannon.getRect()[1]
-
         self.velocityInit = self.cannon.getVelocity()
         self.velocityCurr = self.velocityInit
 
         self.velocityX, self.velocityY = self.splitVelocityComponents()
 
+        self.distX, self.distY = self.getCurrDistance(0)
+
+
+    def getCurrDistance(self, time):
+        distX = (self.velocityX * time) + self.cannon.getRect()[0] + self.cannon.getWidth()
+        distY = ((self.velocityY * time) + ((((self.environment.getGravity() // 2) * -1) * (time ** 2)) / 2)) + self.cannon.getRect()[1]
+        return distX, distY
 
     def splitVelocityComponents(self):
         velX = (self.velocityCurr*math.cos(math.radians(self.cannon.getAngle())))
@@ -28,14 +33,11 @@ class Projectile:
         return velX, velY
 
     def updatePosition(self):
-        pass #Update position w magnitude in correct direction
+        self.distX, self.distY = self.getCurrDistance(0)
 
-    def updateVelocity(self):
-        pass #UPDATE VELOCITY
-
-    def update(self):
+    def update(self, time):
+        self.getCurrDistance(time)
         self.updatePosition()
-        self.updateVelocity()
 
     def draw(self):
-        pygame.draw.rect(self.screen, WHITE, pygame.Rect(self.x, self.y, self.width, self.height))
+        pygame.draw.rect(self.screen, WHITE, pygame.Rect(self.distX, self.distY, self.width, self.height))

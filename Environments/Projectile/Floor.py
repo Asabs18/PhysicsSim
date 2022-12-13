@@ -1,15 +1,16 @@
 import pygame
 
-from Components.assets import *
+from Assets.constants import *
 
 pygame.init()
 
 class Floor:
-    def __init__(self, screen, height):
-        self.screen = screen
+    def __init__(self, environment, height):
+        self.environment = environment
+        self.screen = self.environment.getScreen()
 
-        self.screenWidth = screen.get_width()
-        self.screenHeight = screen.get_height()
+        self.screenWidth = self.screen.get_width()
+        self.screenHeight = self.screen.get_height()
 
         self.width = self.screenWidth
         self.height = height

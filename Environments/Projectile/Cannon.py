@@ -1,11 +1,12 @@
 import pygame
-from Components.assets import *
+from Assets.constants import *
 
 pygame.init()
 
 class Cannon:
-    def __init__(self, screen, floor, angle, velocity):
-        self.screen = screen
+    def __init__(self, environment, floor, angle, velocity):
+        self.environment = environment
+        self.screen = self.environment.getScreen()
 
         self.width = 100
         self.height = 50

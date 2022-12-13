@@ -1,5 +1,7 @@
 #CONSTANTS
-FPS = 60
+FPS = 200
+TIME_INC = 0.05
+
 BALL_W = 10
 BALL_H = 10
 
