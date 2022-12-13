@@ -19,7 +19,7 @@ pygame.display.set_caption("Physics Simulation")
 def projectileDriver():
     runGL = True
     while runGL:
-        clock.tick(FPS)
+        clock.tick()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -29,7 +29,7 @@ def projectileDriver():
                     pygame.quit()
                     sys.exit()
         
-        projectile.updatePosition()
+        projectile.update()
 
         screen.fill(GREY)
         floor.draw()
