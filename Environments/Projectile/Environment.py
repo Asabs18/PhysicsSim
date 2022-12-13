@@ -8,6 +8,8 @@ class Environment:
 
         self.gravity = 9.8
 
+    #GETTERS
+
     def getGravity(self):
         return self.gravity
 

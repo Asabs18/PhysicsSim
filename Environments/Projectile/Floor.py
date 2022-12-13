@@ -22,6 +22,7 @@ class Floor:
     def draw(self):
         pygame.draw.rect(self.screen, BLACK, pygame.Rect(self.x, self.y, self.width, self.height))
 
-    #Returns a Rect Object that contains the x and y coords as well as the width and height of the floor
+    #GETTERS
+
     def getRect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)

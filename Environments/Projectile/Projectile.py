@@ -18,26 +18,25 @@ class Projectile:
 
         self.velocityX, self.velocityY = self.splitVelocityComponents()
 
-        self.distX, self.distY = self.getCurrDistance(0)
+        self.distX, self.distY = self.findCurrDistance(0)
 
-
-    def getCurrDistance(self, time):
+    #Current distance from starting point based on time into simulation
+    def findCurrDistance(self, time):
         distX = (self.velocityX * time) + self.cannon.getRect()[0] + self.cannon.getWidth()
         distY = ((self.velocityY * time) + ((((self.environment.getGravity() // 2) * -1) * (time ** 2)) / 2)) + self.cannon.getRect()[1]
         return distX, distY
 
+    #Velocity in the x and y directions based on an overall velocity in a certain angle
     def splitVelocityComponents(self):
         velX = (self.velocityCurr*math.cos(math.radians(self.cannon.getAngle())))
         velY = (self.velocityCurr*math.sin(math.radians(self.cannon.getAngle())))
 
         return velX, velY
 
-    def updatePosition(self):
-        self.distX, self.distY = self.getCurrDistance(0)
-
+    #Updates the current distance to the new distance
     def update(self, time):
-        self.getCurrDistance(time)
-        self.updatePosition()
+        self.distX, self.distY = self.findCurrDistance(time)
 
+    #Prints the projectile to the screen
     def draw(self):
         pygame.draw.rect(self.screen, WHITE, pygame.Rect(self.distX, self.distY, self.width, self.height))

@@ -19,13 +19,15 @@ class Cannon:
         self.angle = angle
         self.velocity = velocity
 
-    #Displays the cannon on the screen
+    #Prints the cannon to the screen
     def draw(self):
         pygame.draw.rect(self.screen, RED, pygame.Rect(self.x, self.y, self.width, self.height))
 
     #Returns a Rect Object that contains the x and y coords as well as the width and height of the floor
     def getRect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)
+
+    #GETTERS
 
     def getVelocity(self):
         return self.velocity
