@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 environment = Environment(screen)
 floor = Floor(environment, 100)
-cannon = Cannon(environment, floor, 50, 10)
+cannon = Cannon(environment, floor, 10, 10)
 projectile = Projectile(environment, cannon)
 
 clock = pygame.time.Clock()

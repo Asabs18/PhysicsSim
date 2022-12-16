@@ -13,8 +13,7 @@ class Projectile:
 
         self.cannon = cannon
 
-        self.velocityInit = self.cannon.getVelocity()
-        self.velocityCurr = self.velocityInit
+        self.velocity = self.cannon.getVelocity()
 
         self.velocityX, self.velocityY = self.splitVelocityComponents()
 
@@ -23,13 +22,14 @@ class Projectile:
     #Current distance from starting point based on time into simulation
     def findCurrDistance(self, time):
         distX = (self.velocityX * time) + self.cannon.getRect()[0] + self.cannon.getWidth()
-        distY = ((self.velocityY * time) + ((((self.environment.getGravity() // 2) * -1) * (time ** 2)) / 2)) + self.cannon.getRect()[1]
+        distY = ((self.velocityY * time) + ((-4.9 * (time ** 2)) / 2)) + self.cannon.getRect()[1]
+        print(distX, distY)
         return distX, distY
 
     #Velocity in the x and y directions based on an overall velocity in a certain angle
     def splitVelocityComponents(self):
-        velX = (self.velocityCurr*math.cos(math.radians(self.cannon.getAngle())))
-        velY = (self.velocityCurr*math.sin(math.radians(self.cannon.getAngle())))
+        velX = (self.velocity*math.cos(math.radians(self.cannon.getAngle())))
+        velY = (self.velocity*math.sin(math.radians(self.cannon.getAngle())))
 
         return velX, velY
 

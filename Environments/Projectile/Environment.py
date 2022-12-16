@@ -6,7 +6,8 @@ class Environment:
     def __init__(self, screen):
         self.screen = screen
 
-        self.gravity = 9.8
+        #find equation or package to get more accurate gravity const
+        self.gravity = 9.8066
 
     #GETTERS
 
