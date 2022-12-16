@@ -25,6 +25,7 @@ class Cannon:
         self.cannonImage = pygame.image.load(CANNON_IMAGE_P).convert_alpha()
         self.cannonImage = pygame.transform.scale(self.cannonImage, (self.width, self.height))
 
+
     #Prints the cannon to the screen
     def draw(self):
         self.screen.blit(self.cannonImage, (self.x, self.y - 20))
@@ -33,6 +34,7 @@ class Cannon:
         dx = cursorPos[0] - self.x
         dy = cursorPos[1] - self.y
         return math.atan2(dy, dx)
+
 
     #GETTERS
 

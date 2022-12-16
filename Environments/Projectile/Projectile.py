@@ -27,6 +27,8 @@ class Projectile:
         self.projectileImage = pygame.image.load(PROJECTILE_IMAGE_P).convert_alpha()
         self.projectileImage = pygame.transform.scale(self.projectileImage, (self.width, self.height))
 
+        self.path = []
+
 
     #Current distance from starting point based on time into simulation
     def findCurrDistance(self, time):
@@ -46,9 +48,13 @@ class Projectile:
         if not pygame.Rect.colliderect(self.getRect(), self.floor.getRect()) and self.shot:
             self.distX, self.distY = self.findCurrDistance(self.time)
             self.time += TIME_INC
+            self.path.append((self.distX + (self.width // 2), self.distY + (self.height // 2)))
 
     #Prints the projectile to the screen
-    def draw(self):
+    def draw(self, showPath=True):
+        if showPath:
+            for point in self.path:
+                pygame.draw.rect(self.screen, WHITE, (point[0], point[1], PATH_WIDTH, PATH_WIDTH))
         self.screen.blit(self.projectileImage, (self.distX, self.distY))
 
     def shoot(self):

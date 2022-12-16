@@ -1,6 +1,6 @@
 import pygame
 
-from Components.assets import *
+from Assets.constants import *
 
 pygame.init()
 
