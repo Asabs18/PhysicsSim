@@ -1,9 +1,11 @@
-import pygame, sys
+import pygame, sys, math
 from Assets.constants import *
 from Environments.Projectile.Environment import Environment
 from Environments.Projectile.Floor import Floor
 from Environments.Projectile.Projectile import Projectile
 from Environments.Projectile.Cannon import Cannon
+
+#Make angle and velocity able to be set by cursor position on screen or by text dialog on side of screen then hitting shoot button
 
 pygame.init()
 
@@ -13,7 +15,7 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 environment = Environment(screen)
 floor = Floor(environment, 100)
 #Make angle and velocity cmd line args
-cannon = Cannon(environment, floor, 45, 90)
+cannon = Cannon(environment, floor, 90)
 projectile = Projectile(floor, cannon)
 
 clock = pygame.time.Clock()
@@ -29,12 +31,9 @@ def drawScreen():
 #Runs simulation for projectile motion
 def projectileDriver():
 
-    time = 0
     runGL = True
-    
     while runGL:
         clock.tick(FPS)
-        time += TIME_INC
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -43,7 +42,11 @@ def projectileDriver():
                 if event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if not projectile.isShot():
+                    pos = pygame.mouse.get_pos()
+                    cannon.setAngle(math.degrees(cannon.findAngle(pos)))
+                    projectile.shoot()
         
-        projectile.update(time)
+        projectile.update()
         drawScreen()
-        

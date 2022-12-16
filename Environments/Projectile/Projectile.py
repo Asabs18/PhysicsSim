@@ -15,9 +15,13 @@ class Projectile:
 
         self.velocity = self.cannon.getVelocity()
 
-        self.velocityX, self.velocityY = self.splitVelocityComponents()
+        self.velocityX, self.velocityY = 0, 0
 
-        self.distX, self.distY = self.findCurrDistance(0)
+        self.distX, self.distY = 0, 0
+
+        self.time = 0
+
+        self.shot = False
 
     #Current distance from starting point based on time into simulation
     def findCurrDistance(self, time):
@@ -33,13 +37,25 @@ class Projectile:
         return velX, velY
 
     #Updates the current distance to the new distance
-    def update(self, time):
-        if not pygame.Rect.colliderect(self.getRect(), self.floor.getRect()):
-            self.distX, self.distY = self.findCurrDistance(time)
+    def update(self):
+        if not pygame.Rect.colliderect(self.getRect(), self.floor.getRect()) and self.shot:
+            self.distX, self.distY = self.findCurrDistance(self.time)
+            self.time += TIME_INC
 
     #Prints the projectile to the screen
     def draw(self):
         pygame.draw.rect(self.screen, BLACK, pygame.Rect(self.distX, self.distY, self.width, self.height))
 
+    def shoot(self):
+        self.shot = True
+
+        self.velocityX, self.velocityY = self.splitVelocityComponents()
+        self.distX, self.distY = self.findCurrDistance(0)
+
+    #GETTERS 
+
     def getRect(self):
         return pygame.Rect(self.distX, self.distY, self.width, self.height)
+
+    def isShot(self):
+        return self.shot

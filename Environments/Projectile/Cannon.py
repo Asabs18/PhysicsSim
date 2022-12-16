@@ -1,11 +1,11 @@
-import pygame
+import pygame, math
 from Assets.constants import *
 from Assets.imagePaths import *
 
 pygame.init()
 
 class Cannon:
-    def __init__(self, environment, floor, angle, velocity):
+    def __init__(self, environment, floor, velocity):
         self.environment = environment
         self.screen = self.environment.getScreen()
 
@@ -18,23 +18,26 @@ class Cannon:
         self.floor = floor
 
         #Negates the passed in angle because the origin in (0, 0) and the cannon is below that
-        self.angle = -angle
+        self.angle = -45
         
         self.velocity = velocity
 
         self.cannonImage = pygame.image.load(CANNON_IMAGE_P).convert_alpha()
         self.cannonImage = pygame.transform.scale(self.cannonImage, (self.width, self.height))
-        self.cannonImage = pygame.transform.rotate(self.cannonImage, -55 - self.angle)
 
     #Prints the cannon to the screen
     def draw(self):
         self.screen.blit(self.cannonImage, (self.x, self.y - 20))
 
-    #Returns a Rect Object that contains the x and y coords as well as the width and height of the floor
-    def getRect(self):
-        return pygame.Rect(self.x, self.y, self.width, self.height)
+    def findAngle(self, cursorPos):
+        dx = cursorPos[0] - self.x
+        dy = cursorPos[1] - self.y
+        return math.atan2(dy, dx)
 
     #GETTERS
+
+    def getRect(self):
+        return pygame.Rect(self.x, self.y, self.width, self.height)
 
     def getVelocity(self):
         return self.velocity
@@ -50,3 +53,9 @@ class Cannon:
 
     def getY(self):
         return self.y
+
+    #SETTERS
+
+    def setAngle(self, newAngle):
+        self.angle = newAngle
+        self.cannonImage = pygame.transform.rotate(self.cannonImage, -55 - self.angle)
