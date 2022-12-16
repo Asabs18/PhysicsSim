@@ -1,4 +1,5 @@
 import pygame
+from Assets.imagePaths import *
 
 pygame.init()
 

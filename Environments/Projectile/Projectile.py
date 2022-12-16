@@ -4,9 +4,9 @@ from Assets.constants import *
 pygame.init()
 
 class Projectile:
-    def __init__(self, environment, cannon):
-        self.environment = environment
-        self.screen = self.environment.getScreen()
+    def __init__(self, floor, cannon):
+        self.floor = floor
+        self.screen = self.floor.environment.getScreen()
 
         self.width = BALL_W
         self.height = BALL_H
@@ -21,9 +21,8 @@ class Projectile:
 
     #Current distance from starting point based on time into simulation
     def findCurrDistance(self, time):
-        distX = (self.velocityX * time) + self.cannon.getRect()[0] + self.cannon.getWidth()
-        distY = ((self.velocityY * time) + ((-4.9 * (time ** 2)) / 2)) + self.cannon.getRect()[1]
-        print(distX, distY)
+        distX = (self.velocityX * time) + self.cannon.getRect()[0] + (self.cannon.getWidth() // 2)
+        distY = ((self.velocityY * time) + ((4.9 * (time ** 2)) / 2)) + (self.cannon.getRect()[1] + 45)
         return distX, distY
 
     #Velocity in the x and y directions based on an overall velocity in a certain angle
@@ -35,8 +34,12 @@ class Projectile:
 
     #Updates the current distance to the new distance
     def update(self, time):
-        self.distX, self.distY = self.findCurrDistance(time)
+        if not pygame.Rect.colliderect(self.getRect(), self.floor.getRect()):
+            self.distX, self.distY = self.findCurrDistance(time)
 
     #Prints the projectile to the screen
     def draw(self):
-        pygame.draw.rect(self.screen, WHITE, pygame.Rect(self.distX, self.distY, self.width, self.height))
+        pygame.draw.rect(self.screen, BLACK, pygame.Rect(self.distX, self.distY, self.width, self.height))
+
+    def getRect(self):
+        return pygame.Rect(self.distX, self.distY, self.width, self.height)

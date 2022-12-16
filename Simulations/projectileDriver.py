@@ -12,14 +12,15 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 environment = Environment(screen)
 floor = Floor(environment, 100)
-cannon = Cannon(environment, floor, 10, 10)
-projectile = Projectile(environment, cannon)
+#Make angle and velocity cmd line args
+cannon = Cannon(environment, floor, 45, 90)
+projectile = Projectile(floor, cannon)
 
 clock = pygame.time.Clock()
 pygame.display.set_caption("Physics Simulation")
 
 def drawScreen():
-    screen.fill(GREY)
+    screen.fill(L_GREY)
     floor.draw()
     projectile.draw()
     cannon.draw()
