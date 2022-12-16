@@ -1,4 +1,5 @@
 import pygame
+from scipy.constants import g
 from Assets.imagePaths import *
 
 pygame.init()
@@ -7,8 +8,7 @@ class Environment:
     def __init__(self, screen):
         self.screen = screen
 
-        #find equation or package to get more accurate gravity const
-        self.gravity = 9.8066
+        self.gravity = g
 
     #GETTERS
 
