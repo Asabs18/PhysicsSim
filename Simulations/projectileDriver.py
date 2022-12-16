@@ -4,6 +4,7 @@ from Environments.Projectile.Environment import Environment
 from Environments.Projectile.Floor import Floor
 from Environments.Projectile.Projectile import Projectile
 from Environments.Projectile.Cannon import Cannon
+from Environments.Projectile.Controller import Controller
 
 #Make angle and velocity able to be set by cursor position on screen or by text dialog on side of screen then hitting shoot button
 
@@ -17,6 +18,7 @@ floor = Floor(environment, 100)
 #Make angle and velocity cmd line args
 cannon = Cannon(environment, floor, 90)
 projectile = Projectile(floor, cannon)
+controller = Controller(environment, projectile)
 
 clock = pygame.time.Clock()
 pygame.display.set_caption("Physics Simulation")
@@ -26,6 +28,7 @@ def drawScreen():
     floor.draw()
     projectile.draw()
     cannon.draw()
+    controller.draw()
     pygame.display.update()
 
 #Runs simulation for projectile motion
@@ -46,6 +49,7 @@ def projectileDriver():
                 if not projectile.isShot():
                     pos = pygame.mouse.get_pos()
                     cannon.setAngle(math.degrees(cannon.findAngle(pos)))
+                    controller.update()
                     projectile.shoot()
         
         projectile.update()

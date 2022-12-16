@@ -1,5 +1,6 @@
 import pygame, math
 from Assets.constants import *
+from Assets.imagePaths import *
 
 pygame.init()
 
@@ -23,6 +24,10 @@ class Projectile:
 
         self.shot = False
 
+        self.projectileImage = pygame.image.load(PROJECTILE_IMAGE_P).convert_alpha()
+        self.projectileImage = pygame.transform.scale(self.projectileImage, (self.width, self.height))
+
+
     #Current distance from starting point based on time into simulation
     def findCurrDistance(self, time):
         distX = (self.velocityX * time) + self.cannon.getRect()[0] + (self.cannon.getWidth() // 2)
@@ -44,7 +49,7 @@ class Projectile:
 
     #Prints the projectile to the screen
     def draw(self):
-        pygame.draw.rect(self.screen, BLACK, pygame.Rect(self.distX, self.distY, self.width, self.height))
+        self.screen.blit(self.projectileImage, (self.distX, self.distY))
 
     def shoot(self):
         self.shot = True
@@ -56,6 +61,9 @@ class Projectile:
 
     def getRect(self):
         return pygame.Rect(self.distX, self.distY, self.width, self.height)
+    
+    def getVelocity(self):
+        return self.velocity
 
     def isShot(self):
         return self.shot

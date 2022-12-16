@@ -31,3 +31,6 @@ class Floor:
 
     def getRect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)
+
+    def getHeight(self):
+        return self.height
