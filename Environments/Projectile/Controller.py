@@ -1,6 +1,8 @@
 import pygame
+
 from Assets.constants import *
 from Assets.Button import Button
+
 from Environments.Projectile.Environment import Environment
 from Environments.Projectile.Floor import Floor
 from Environments.Projectile.Cannon import Cannon
@@ -8,65 +10,82 @@ from Environments.Projectile.Projectile import Projectile
 
 pygame.init()
 
+#Maintains the dialog box and all relevant info
 class Controller:
     def __init__(self, environment, projectile):
-        self.environment = environment
+        self.screen = environment.getScreen()
 
+        #Relevant classes
+        self.environment = environment
         self.projectile = projectile
 
-        self.angle = self.projectile.cannon.getAngle()
+        #Define angle and velocity to same as cannon angle and velocity (They are always linked)
+        self.angle = self.setAngle(self.projectile.cannon.getAngle())
         self.velocity = self.projectile.getVelocity()
+
         self.floorHeight = self.projectile.floor.getHeight()
 
+        #Define dimensions and location of dialog box dynamically to fit to any screen size
         self.width = self.environment.screen.get_width() // 4
         self.height = self.width
-
         self.x = self.environment.screen.get_width() - (self.width + CONTROLLER_OFFSET_X)
-        #Uses constant to dynamically keep the controller in the upper right corner no matter of screen size
-        self.y = self.environment.screen.get_width() - (self.x * 1.375)
+        self.y = self.environment.screen.get_width() - (self.x * CONTROLLER_OFFSET_MULTIPLIER_Y)
 
-        self.buttons = self.createButtons()
+        self.createButtons()
 
-    def checkButtonClick(self, cursorPos):
-        if self.buttons[0].isClicked(cursorPos):
+
+    #Check if shoot button clicked
+    def isClickedSB(self, cursorPos):
+        isClicked = False
+
+        if self.shootButton.isClicked(cursorPos):
             self.executeShootButton()
-        elif self.buttons[1].isClicked(cursorPos):
+            isClicked = True
+
+        return isClicked
+
+
+    #Check if reset button clicked
+    def isClickedRB(self, cursorPos):
+        isClicked = False
+
+        if self.resetButton.isClicked(cursorPos):
             self.executeResetButton()
-        
+            isClicked = True
+
+        return isClicked
+                
+    #Shoot projectile
     def executeShootButton(self):
-        print("Shoot Button Clicked")
+        self.projectile.shoot()
 
+    #Reset entire program to init values
     def executeResetButton(self):
-        environment = Environment(self.environment.screen)
-        floor = Floor(environment, 100)
-        cannon = Cannon(environment, floor, 90)
-        projectile = Projectile(floor, cannon)
-        controller = Controller(environment, projectile)
+        pass
 
+    #Create buttons dynamically based on size and location of dialog box
     def createButtons(self):
-        buttons = []
-
         shootButtonRect = pygame.Rect((self.x + (self.width // 2)) - CONTROLLER_BUTTON_OFFSET_X, self.height + 30, BUTTON_WIDTH, BUTTON_HEIGHT)
         resetButtonRect = pygame.Rect((self.x + (self.width // 2)) + CONTROLLER_BUTTON_OFFSET_X, self.height + 30, BUTTON_WIDTH, BUTTON_HEIGHT)
 
-        buttons.append(Button(self.environment.screen, "Shoot", shootButtonRect, D_GREY))
-        buttons.append(Button(self.environment.screen, "Reset", resetButtonRect, D_GREY))
+        self.shootButton = Button(self.screen, "Shoot", shootButtonRect, D_GREY)
+        self.resetButton = Button(self.screen, "Reset", resetButtonRect, D_GREY)
 
-        return buttons
-
-
-    def update(self):
-        if not self.projectile.isShot():
-            self.angle = self.projectile.cannon.getAngle()
-            self.velocity = self.projectile.getVelocity()
-
+    #Draw all controller assets to screen
     def draw(self):
-        pygame.draw.rect(self.environment.screen, GREY, pygame.Rect(self.x, self.y, self.width, self.height))
-        for button in self.buttons:
-            button.draw()
+        pygame.draw.rect(self.screen, GREY, pygame.Rect(self.x, self.y, self.width, self.height))
+        self.shootButton.draw()
+        self.resetButton.draw()
+        self.screen.blit(self.textinput.surface, (10, 10))
 
     #GETTERS
 
     def getRect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)
+
+    #SETTERS
+
+    def setAngle(self, newAngle):
+        self.angle = newAngle
+        self.projectile.cannon.setAngle(self.angle)
 
