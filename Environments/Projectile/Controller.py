@@ -2,6 +2,7 @@ import pygame
 
 from Assets.constants import *
 from Assets.Button import Button
+from Assets.InputBox import InputBox
 
 from Environments.Projectile.Environment import Environment
 from Environments.Projectile.Floor import Floor
@@ -32,6 +33,12 @@ class Controller:
         self.y = self.environment.screen.get_width() - (self.x * CONTROLLER_OFFSET_MULTIPLIER_Y)
 
         self.createButtons()
+
+        #Make update calls for each input box
+        velocityInput = InputBox((100, 100), "", False)
+        accelerationInput = InputBox((100, 200), "", False)
+        distanceInput = InputBox((100, 300), "", False)
+
 
 
     #Check if shoot button clicked
