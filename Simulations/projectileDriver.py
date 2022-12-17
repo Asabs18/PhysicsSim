@@ -15,7 +15,6 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 environment = Environment(screen)
 floor = Floor(environment, 100)
-#Make angle and velocity cmd line args
 cannon = Cannon(environment, floor, 90)
 projectile = Projectile(floor, cannon)
 controller = Controller(environment, projectile)
@@ -46,11 +45,11 @@ def projectileDriver():
                     pygame.quit()
                     sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if not projectile.isShot():
-                    pos = pygame.mouse.get_pos()
-                    cannon.setAngle(math.degrees(cannon.findAngle(pos)))
+                if not projectile.isShot() and not controller.getRect().collidepoint(pygame.mouse.get_pos()):
+                    cannon.setAngle(math.degrees(cannon.findAngle(pygame.mouse.get_pos())))
                     controller.update()
                     projectile.shoot()
+                controller.checkButtonClick(pygame.mouse.get_pos())
         
         projectile.update()
         drawScreen()
