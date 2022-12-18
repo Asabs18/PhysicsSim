@@ -17,13 +17,13 @@ def drawScreen():
     projectile.draw()
     cannon.draw()
     controller.draw()
-    pygame.display.update()
 
-def update():
+def update(events):
     clock.tick(FPS)
     projectile.update()
     drawScreen()
-
+    controller.update(events)
+    pygame.display.update()
 
 #Setup Environment
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -41,13 +41,14 @@ input = Input(environment, floor, cannon, projectile, controller)
 
 #Runs simulation for projectile motion
 def projectileDriver():
-
     runGL = True
+
     while runGL:
         events = pygame.event.get()
-        controller.update(events)
+
         for event in events:
             input.handleExit(event)
             input.handleClick(event)
-        update()
-        
+            input.handleKeypress(event)
+
+        update(events)

@@ -38,7 +38,7 @@ class Cannon:
     def findAngle(self, cursorPos):
         dx = cursorPos[0] - self.x
         dy = cursorPos[1] - self.y
-        return math.atan2(dy, dx)
+        return math.degrees(math.atan2(dy, dx))
 
     #Update the cannon image rotation to account for current angle
     def update(self):
@@ -66,6 +66,8 @@ class Cannon:
 
     #SETTERS
 
+    def setVelocity(self, newVelocity):
+        self.velocity = newVelocity
+
     def setAngle(self, newAngle):
         self.angle = newAngle
-        self.update() #Updates cannon image angle

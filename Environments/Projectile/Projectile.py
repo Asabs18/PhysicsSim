@@ -70,6 +70,8 @@ class Projectile:
     def shoot(self):
         self.shot = True
 
+        self.cannon.update()
+
         self.velocityX, self.velocityY = self.splitVelocityComponents()
         self.x, self.y = self.findCurrDistance(0)
 
@@ -81,5 +83,21 @@ class Projectile:
     def getVelocity(self):
         return self.velocity
 
+    def getDistance(self):
+        return self.x
+
+    def getTime(self):
+        return self.time
+
     def isShot(self):
         return self.shot
+
+    #SETTERS
+
+    def setVelocity(self, newVelocity):
+        self.velocity = newVelocity
+        self.cannon.setVelocity(self.velocity)
+
+    def setAngle(self, newAngle):
+        self.angle = newAngle
+        self.cannon.setAngle(self.angle)
