@@ -23,8 +23,7 @@ class Input:
     def handleExit(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.controller.isClickedQB(pygame.mouse.get_pos()):
-                pygame.quit()
-                sys.exit()
+                self.controller.executeQuitButton()
 
 
     #Updates angle and or shoots projectile based on click location
@@ -37,7 +36,8 @@ class Input:
             elif not self.projectile.isShot() and self.controller.isClickedSB(pos):
                 self.projectile.shoot()
             else:
-                self.controller.isClickedRB(pos)
+                if self.controller.isClickedRB(pos):
+                    self.controller.executeResetButton()
 
     def handleKeypress(self, event):
         if event.type == pygame.KEYDOWN:

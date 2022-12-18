@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 
 from Assets.constants import *
 from Assets.Button import Button
@@ -38,6 +38,9 @@ class Controller:
         #Create interactive elements
         self.createButtons()
         self.createTextInputs()
+
+        #Define restart variable
+        self.restart = False
 
     def update(self, events): 
         self.velocityInput.update(events)
@@ -86,11 +89,12 @@ class Controller:
 
     #Reset entire program to init values
     def executeResetButton(self):
-        pass
+        self.restart = True
 
     #Quit Program
     def executeQuitButton(self):
-        pass
+        pygame.quit()
+        sys.exit()
 
     #Create buttons dynamically based on size and location of dialog box
     def createButtons(self):
@@ -155,6 +159,9 @@ class Controller:
 
     def getDistanceInput(self):
         return self.distanceInput
+
+    def isRestart(self):
+        return self.restart
 
     #SETTERS
 
