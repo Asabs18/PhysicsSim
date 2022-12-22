@@ -35,9 +35,10 @@ def projectileDriver():
 
         pygame.display.set_caption("Physics Simulation")
 
+        #TODO: Change design to create classes inside of eachother
         environment = Environment(screen)
         floor = Floor(environment, 100)
-        cannon = Cannon(environment, floor, 90)
+        cannon = Cannon(environment, floor, 90, INIT_ANGLE)
         projectile = Projectile(environment, floor, cannon)
         controller = Controller(environment, projectile)
         input = Input(environment, floor, cannon, projectile, controller)

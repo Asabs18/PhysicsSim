@@ -32,9 +32,9 @@ class Input:
             pos = pygame.mouse.get_pos()
             if not self.projectile.isShot() and not self.controller.getRect().collidepoint(pos):
                 self.controller.setAngle(self.cannon.findAngle(pos))
-                self.projectile.shoot()
+                self.controller.executeStartButton()
             elif not self.projectile.isShot() and self.controller.isClickedSB(pos):
-                self.projectile.shoot()
+                self.controller.executeStartButton()
             else:
                 if self.controller.isClickedRB(pos):
                     self.controller.executeResetButton()
