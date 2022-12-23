@@ -30,3 +30,7 @@ class Floor(FloorInterface):
     def draw(self):
         pygame.draw.rect(self.screen, D_GREY, pygame.Rect(self.x, self.y, self.width, self.height))
         self.screen.blit(self.floorImage, (self.x, self.y))
+
+    #GETTERS
+    def getY(self):
+        return self.y

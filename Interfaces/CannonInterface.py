@@ -3,16 +3,19 @@ import pygame, math
 from Assets.constants import *
 from Assets.imagePaths import *
 
+from Environments.Projectile.Floor import Floor
+from Environments.Projectile.Projectile import Projectile
+
 pygame.init()
 
 #Maintains the cannon and all relevant info (Some constants defined outside of file)
 class CannonInterface:
-    def __init__(self, environment, floor, velocity, angle):
+    def __init__(self, environment, velocity, angle):
         self.screen = environment.getScreen()
 
         #Relevant classes
         self.environment = environment
-        self.floor = floor
+        self.floor = Floor(environment, 100)
 
         #Define values which describe the cannon/projectile movement
         self.angle = -angle #Negates the passed in angle because the origin in (0, 0) and the cannon is below that
@@ -23,13 +26,15 @@ class CannonInterface:
         self.height = CANNON_HEIGHT
 
         self.x = CANNON_OFFSET_X
-        self.y = (floor.getRect()[1] - (self.height - 20))
+        self.y = (self.floor.getRect()[1] - (self.height - 20))
 
+        #Projectile
+        self.projectile = Projectile(environment, self.floor, self)
 
         #Define cannon assetS
-        self.cannonImage = pygame.image.load(CANNON_IMAGE_P).convert_alpha()
-        self.cannonImage = pygame.transform.scale(self.cannonImage, (self.width, self.height))
-        self.cannonImage = pygame.transform.rotate(self.cannonImage, -55 - self.angle)
+        self.originalImage = pygame.image.load(CANNON_IMAGE_P).convert_alpha()
+        self.originalImage = pygame.transform.scale(self.originalImage, (self.width, self.height))
+        self.cannonImage = pygame.transform.rotate(self.originalImage, -55 - self.angle)
 
 
     #Prints the cannon to the screen
@@ -44,7 +49,7 @@ class CannonInterface:
 
     #Update the cannon image rotation to account for current angle
     def update(self):
-        self.cannonImage = pygame.transform.rotate(self.cannonImage, -45 - self.angle)
+        self.cannonImage = pygame.transform.rotate(self.originalImage, -60 - self.angle)
 
     #GETTERS
 

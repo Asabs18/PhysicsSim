@@ -89,7 +89,7 @@ class ControllerInterface:
     #Display time on screen
     def drawTime(self):
         textSurf = self.font.render("Time: " + str(round(self.projectile.getTime())) + " s", 0, BLACK)
-        self.screen.blit(textSurf, (self.x + self.width - TEXTBOX_OFFSET_X, 375))
+        self.screen.blit(textSurf, (self.x + self.width - TEXTBOX_OFFSET_X, self.y+self.height//1.75))
 
     #Draw all controller assets to screen
     def draw(self):

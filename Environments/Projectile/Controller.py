@@ -63,9 +63,9 @@ class Controller(ControllerInterface):
 
     #Create text inputs dynamically based on size and location of dialog box
     def createTextInputs(self):
-        velocityInputRect = pygame.Rect(self.x + self.width - TEXTBOX_OFFSET_X, 100, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)
-        angleInputRect = pygame.Rect(self.x + self.width - TEXTBOX_OFFSET_X, 200, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)
-        distanceInputRect = pygame.Rect(self.x + self.width - TEXTBOX_OFFSET_X, 300, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)
+        velocityInputRect = pygame.Rect(self.x + self.width - TEXTBOX_OFFSET_X, self.y + self.height // 15, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)
+        angleInputRect = pygame.Rect(self.x + self.width - TEXTBOX_OFFSET_X, self.y + self.height // 4, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)
+        distanceInputRect = pygame.Rect(self.x + self.width - TEXTBOX_OFFSET_X, self.y + self.height // 2.35, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)
         
         self.velocityInput = InputBox(self.environment, velocityInputRect, str(self.velocity), "m/s", False, False)
         self.angleInput = InputBox(self.environment, angleInputRect, str(-self.angle), "°", False, False)

@@ -5,12 +5,12 @@ pygame.init()
 
 #Handles any user input to the program
 class Input:
-    def __init__(self, environment, floor, cannon, projectile, controller):
+    def __init__(self, environment, cannon, controller):
         #Relevant classes
         self.environment = environment
-        self.floor = floor
+        self.floor = cannon.floor
         self.cannon = cannon
-        self.projectile = projectile
+        self.projectile = cannon.projectile
         self.controller = controller
 
         #Define screen 

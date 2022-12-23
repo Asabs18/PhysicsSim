@@ -54,10 +54,11 @@ class ProjectileInterface:
 
     #Updates the current distance to the new distance
     def update(self):
-        if not pygame.Rect.colliderect(self.getRect(), self.floor.getRect()) and self.shot:
-            self.x, self.y = self.findCurrDistance(self.time)
-            self.time += TIME_INC
-            self.path.append((self.x + (self.width // 2), self.y + (self.height // 2)))
+        if self.shot:
+            if not pygame.Rect.colliderect(self.getRect(), self.floor.getRect()) and not self.y >= self.floor.getY():
+                self.x, self.y = self.findCurrDistance(self.time)
+                self.time += TIME_INC
+                self.path.append((self.x + (self.width // 2), self.y + (self.height // 2)))
 
     #Prints the projectile to the screen
     def draw(self, showPath=True):

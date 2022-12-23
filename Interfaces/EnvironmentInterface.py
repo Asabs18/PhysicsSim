@@ -5,9 +5,11 @@ from Assets.imagePaths import *
 pygame.init()
 
 class EnvironmentInterface:
-    def __init__(self, screen):
+    def __init__(self):
         #Define screen
-        self.screen = screen
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+        self.clock = pygame.time.Clock()
 
         #CONSTANTS
         self.gravity = g
