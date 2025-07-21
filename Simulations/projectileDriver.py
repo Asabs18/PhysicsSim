@@ -1,8 +1,8 @@
 import pygame, math
 
+# Import required modules and classes
 from Assets.constants import *
 from Assets.Input import Input
-
 from Environments.Projectile.Environment import Environment
 from Environments.Projectile.Projectile import Projectile
 from Environments.Projectile.Cannon import Cannon
@@ -11,6 +11,9 @@ from Environments.Projectile.Controller import Controller
 pygame.init()
 
 def drawScreen(controller):
+    """
+    Draws all elements on the screen for the current frame.
+    """
     controller.screen.fill(L_GREY)
     controller.projectile.floor.draw()
     controller.projectile.draw()
@@ -18,26 +21,25 @@ def drawScreen(controller):
     controller.draw()
 
 def update(events, controller):
+    """
+    Updates simulation state and redraws the screen.
+    """
     controller.projectile.update()
     drawScreen(controller)
     controller.update(events)
     pygame.display.update()
 
-#Runs simulation for projectile motion
 def projectileDriver():
-    #Restart Program Level Loop
-    while True:
-        #Setup Environment
+    """
+    Runs the main loop for the projectile motion simulation.
+    """
+    while True:  # Restart Program Level Loop
+        # Setup Environment and objects
         environment = Environment()
-
         cannon = Cannon(environment, 90, INIT_ANGLE)
-
         controller = Controller(environment, cannon.projectile)
-
         input = Input(environment, cannon, controller)
-        
-
-        #Main loop 
+        # Main loop will follow here
         runGL = True
 
         while runGL:

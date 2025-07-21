@@ -3,35 +3,31 @@ from Assets.constants import *
 
 pygame.init()
 
-#TODO: Change name to textbox not inputbox
+# Represents a text input box (TODO: rename to TextBox)
 class InputBox:
     def __init__(self, environment, textboxRect, text, unit, active, constant):
         self.screen = environment.getScreen()
-
-        #Relevant classes
+        # Store reference to environment
         self.environment = environment
-
-        #Define text as blank
+        # Initial text value
         self.text = text
-
-        #Define rect, position, size, and activation status
+        # Rectangle properties and activation status
         self.rect = textboxRect
         self.pos = (self.rect[0], self.rect[1])
         self.width = self.rect[2]
         self.height = self.rect[3]
         self.active = active
-
-        #Define font and units
+        # Font and unit label
         self.font = DEFAULT_F
         self.unit = "   " + unit
-
-        #Define if the Inputbox can be edited or not
+        # Whether the input box is editable
         self.constant = constant
 
-    #Activate the textbox by clicking on it
     def isClicked(self):
+        """
+        Activate the textbox by clicking on it.
+        """
         inputBox = pygame.Rect(self.pos, (self.width, self.height))
-
         if pygame.mouse.get_pressed()[0] and not self.constant: 
             if inputBox.collidepoint(pygame.mouse.get_pos()):
                 self.active = True
